@@ -1,6 +1,6 @@
 # 🐳 DevOps Reverse Proxy Assignment
 
-This project demonstrates containerized deployment of two backend services using **Docker Compose**, with **NGINX** acting as a reverse proxy inside a Docker container.
+This project demonstrates containerized deployment of two backend services using **Docker Compose** with **NGINX** acting as a reverse proxy inside a Docker container.
 
 ---
 
@@ -8,7 +8,7 @@ This project demonstrates containerized deployment of two backend services using
 
 ```
 .
-├── docker-compose.yml
+├── docker-compose.yaml
 ├── nginx/
 │   ├── nginx.conf
 │   └── Dockerfile
@@ -49,14 +49,16 @@ Once the system is up, test these URLs in your browser or terminal:
 
 | URL                            | Description            |
 |--------------------------------|------------------------|
-| http://localhost:8080/service1 | Go backend service     |
-| http://localhost:8080/service2 | Python Flask service   |
+| http://localhost:8081/service1 | Go backend service     |
+| http://localhost:8081/service2 | Python Flask service   |
 
 Example using `curl`:
 
 ```bash
-curl http://localhost:8080/service1/ping
-curl http://localhost:8080/service2
+curl http://localhost:8081/service1/ping
+curl http://localhost:8081/service1/hello
+curl http://localhost:8081/service2/ping
+curl http://localhost:8081/service2/hello
 ```
 
 ---
@@ -72,7 +74,7 @@ services:
   nginx:
     build: ./nginx
     ports:
-      - "8080:80"
+      - "8081:80"
     depends_on:
       - service_1
       - service_2
@@ -90,8 +92,8 @@ location /service2/ {
 ```
 
 So:
-- Requests to `localhost:8080/service1` → Go service on port 8001
-- Requests to `localhost:8080/service2` → Python Flask service on port 8002
+- Requests to `localhost:8081/service1` → Go service on port 8001
+- Requests to `localhost:8081/service2` → Python Flask service on port 8002
 
 📝 Also logs each incoming request with timestamp and path.
 
@@ -124,7 +126,7 @@ NGINX logs all incoming requests:
 
 ### ✅ Single Port Access
 
-- Both apps accessible on `http://localhost:8080` using different path prefixes.
+- Both apps accessible on `http://localhost:8081` using different path prefixes.
 
 ---
 
