@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  nginx:
+    build: ./nginx
+    ports:
+     - "8081:80"
+    depends_on:
+     - service_1
+     - service_2
+  
+  service_1:
+    build: ./service_1
+    expose:
+     - "8001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  service_2:
+    build: ./service_2 
+    expose:
+     - "8002"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8002"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
